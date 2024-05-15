@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChelTracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85a0ee8d28b583fa99548d699ebee919a7b57a2a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be980a0cb2ca5aede3969b0fab94e4dedd204072")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChelTracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChelTracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
