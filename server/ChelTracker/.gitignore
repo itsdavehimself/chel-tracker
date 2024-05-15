@@ -1,0 +1,17 @@
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+*.suo
+*.user
+*.sln.docstates
+bin/
+obj/
+
+# Rider
+.idea/
+
+# Compiled binaries
+*.dll
+*.exe
+*.pdb
