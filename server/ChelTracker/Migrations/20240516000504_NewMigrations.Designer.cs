@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChelTracker.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240515193650_init")]
-    partial class init
+    [Migration("20240516000504_NewMigrations")]
+    partial class NewMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,9 @@ namespace ChelTracker.Migrations
                     b.Property<int>("OpponentHits")
                         .HasColumnType("int");
 
+                    b.Property<int>("OpponentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OpponentScore")
                         .HasColumnType("int");
 
@@ -55,7 +58,7 @@ namespace ChelTracker.Migrations
                     b.Property<int>("UserHits")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserScore")
@@ -69,6 +72,8 @@ namespace ChelTracker.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OpponentId");
 
                     b.HasIndex("UserId");
 
@@ -124,9 +129,21 @@ namespace ChelTracker.Migrations
 
             modelBuilder.Entity("ChelTracker.Models.Game", b =>
                 {
-                    b.HasOne("ChelTracker.Models.User", null)
+                    b.HasOne("ChelTracker.Models.Opponent", "Opponent")
+                        .WithMany()
+                        .HasForeignKey("OpponentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChelTracker.Models.User", "User")
                         .WithMany("Games")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Opponent");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ChelTracker.Models.Opponent", b =>
