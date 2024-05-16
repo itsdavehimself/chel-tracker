@@ -22,12 +22,12 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var user = _context.Users
+            var user = await _context.Users
                             .Include(u => u.Games)
                             .Include(u => u.Opponents)
-                            .FirstOrDefault(u => u.UserId == id);
+                            .FirstOrDefaultAsync(u => u.UserId == id);
 
             if (user == null)
             {
@@ -38,19 +38,19 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateUserRequestDto userDto)
+        public async Task<IActionResult> Create([FromBody] CreateUserRequestDto userDto)
         {
             var userModel = userDto.ToUserFromCreateDto();
-            _context.Users.Add(userModel);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(userModel);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = userModel.UserId }, userModel.ToUserDto());
         }
 
         [HttpPut]
         [Route("{userId}")]
-        public IActionResult Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateDto)
+        public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateDto)
         {
-            var userModel = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            var userModel = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
 
             if (userModel == null)
             {
@@ -60,16 +60,16 @@ namespace ChelTracker.Controllers
             userModel.Email = updateDto.Email;
             userModel.Username = updateDto.Username;
             userModel.Password = updateDto.Password;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(userModel.ToUserDto());
         }
 
         [HttpDelete]
         [Route("{userId}")]
-        public IActionResult Delete([FromRoute] int userId)
+        public async Task<IActionResult> Delete([FromRoute] int userId)
         {
-            var userModel = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            var userModel = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
 
             if (userModel == null)
             {
@@ -77,7 +77,7 @@ namespace ChelTracker.Controllers
             }
 
             _context.Users.Remove(userModel);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

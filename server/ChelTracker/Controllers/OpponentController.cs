@@ -6,6 +6,7 @@ using ChelTracker.Data;
 using ChelTracker.Dtos.Opponent;
 using ChelTracker.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChelTracker.Controllers
 {
@@ -21,17 +22,20 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        public IActionResult GetByUserId([FromRoute] int userId)
+        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
         {
             try
             {
-                var opponents = _context.Opponents.Where(o => o.UserId == userId).ToList().Select(o => o.ToOpponentDto());
-                if (!opponents.Any())
+                var opponents = await _context.Opponents.Where(o => o.UserId == userId).ToListAsync();
+
+                var opponentsDto = opponents.Select(o => o.ToOpponentDto());
+
+                if (!opponentsDto.Any())
                 {
                     return NotFound();
                 }
 
-                return Ok(opponents);
+                return Ok(opponentsDto);
             }
             catch (Exception ex)
             {
@@ -40,9 +44,9 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("{opponentId}")]
-        public IActionResult GetById([FromRoute] int opponentId)
+        public async Task<IActionResult> GetById([FromRoute] int opponentId)
         {
-            var opponent = _context.Opponents.Find(opponentId);
+            var opponent = await _context.Opponents.FindAsync(opponentId);
 
             if (opponent == null)
             {
@@ -53,20 +57,20 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateOpponentRequestDto opponentDto)
+        public async Task<IActionResult> Create([FromBody] CreateOpponentRequestDto opponentDto)
         {
             var opponentModel = opponentDto.ToOpponentFromCreateDto();
-            _context.Opponents.Add(opponentModel);
-            _context.SaveChanges();
+            await _context.Opponents.AddAsync(opponentModel);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { opponentId = opponentModel.OpponentId }, opponentModel.ToOpponentDto());
         }
 
         [HttpPut]
         [Route("{opponentId}")]
 
-        public IActionResult Update([FromRoute] int opponentId, [FromBody] UpdateOpponentRequestDto updateDto)
+        public async Task<IActionResult> Update([FromRoute] int opponentId, [FromBody] UpdateOpponentRequestDto updateDto)
         {
-            var opponentModel = _context.Opponents.FirstOrDefault(o => o.OpponentId == opponentId);
+            var opponentModel = await _context.Opponents.FirstOrDefaultAsync(o => o.OpponentId == opponentId);
 
             if (opponentModel == null)
             {
@@ -74,16 +78,16 @@ namespace ChelTracker.Controllers
             }
 
             opponentModel.Name = updateDto.Name;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(opponentModel.ToOpponentDto());
         }
 
         [HttpDelete]
         [Route("{opponentId}")]
-        public IActionResult Delete([FromRoute] int opponentId)
+        public async Task<IActionResult> Delete([FromRoute] int opponentId)
         {
-            var opponentModel = _context.Opponents.FirstOrDefault(o => o.OpponentId == opponentId);
+            var opponentModel = await _context.Opponents.FirstOrDefaultAsync(o => o.OpponentId == opponentId);
 
             if (opponentModel == null)
             {
@@ -91,7 +95,7 @@ namespace ChelTracker.Controllers
             }
 
             _context.Opponents.Remove(opponentModel);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

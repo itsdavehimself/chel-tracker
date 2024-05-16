@@ -23,9 +23,9 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var game = _context.Games.Find(id);
+            var game = await _context.Games.FindAsync(id);
 
             if (game == null)
             {
@@ -36,21 +36,22 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByUserIdAndOpponentId([FromQuery(Name = "user")] int userId, [FromQuery(Name = "opponent")] int opponentId)
+        public async Task<IActionResult> GetByUserIdAndOpponentId([FromQuery(Name = "user")] int userId, [FromQuery(Name = "opponent")] int opponentId)
         {
             try
             {
-                var games = _context.Games
+                var games = await _context.Games
                     .Where(g => g.UserId == userId && g.OpponentId == opponentId)
-                    .ToList()
-                    .Select(g => g.ToGameDto());
+                    .ToListAsync();
 
-                if (!games.Any())
+                var gamesDto = games.Select(g => g.ToGameDto());
+
+                if (!gamesDto.Any())
                 {
                     return NotFound();
                 }
 
-                return Ok(games);
+                return Ok(gamesDto);
             }
             catch (Exception ex)
             {
@@ -59,7 +60,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateGameRequestDto gameDto)
+        public async Task<IActionResult> Create([FromBody] CreateGameRequestDto gameDto)
         {
 
             if (!DateTime.TryParse(gameDto.Date, out DateTime date))
@@ -70,16 +71,16 @@ namespace ChelTracker.Controllers
             var dateOnly = new DateOnly(date.Year, date.Month, date.Day);
 
             var gameModel = gameDto.ToGameFromCreateDto(dateOnly);
-            _context.Games.Add(gameModel);
-            _context.SaveChanges();
+            await _context.Games.AddAsync(gameModel);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = gameModel.Id }, gameModel.ToGameDto());
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateGameRequestDto updateDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateGameRequestDto updateDto)
         {
-            var gameModel = _context.Games.FirstOrDefault(g => g.Id == id);
+            var gameModel = await _context.Games.FirstOrDefaultAsync(g => g.Id == id);
 
             if (gameModel == null)
             {
@@ -105,16 +106,16 @@ namespace ChelTracker.Controllers
             gameModel.OpponentHits = updateDto.OpponentHits;
             gameModel.UserId = updateDto.UserId;
             gameModel.OpponentId = updateDto.OpponentId;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(gameModel.ToGameDto());
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var gameModel = _context.Games.FirstOrDefault(g => g.Id == id);
+            var gameModel = await _context.Games.FirstOrDefaultAsync(g => g.Id == id);
 
             if (gameModel == null)
             {
@@ -122,7 +123,7 @@ namespace ChelTracker.Controllers
             }
 
             _context.Games.Remove(gameModel);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
