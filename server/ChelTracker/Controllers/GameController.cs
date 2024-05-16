@@ -34,13 +34,11 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByUserIdAndOpponentId([FromRoute] int userId, int opponentId)
+        public IActionResult GetByUserIdAndOpponentId([FromQuery(Name = "user")] int userId, [FromQuery(Name = "opponent")] int opponentId)
         {
             try
             {
                 var games = _context.Games
-                    .Include(g => g.User)
-                    .Include(g => g.Opponent)
                     .Where(g => g.UserId == userId && g.OpponentId == opponentId)
                     .ToList();
 

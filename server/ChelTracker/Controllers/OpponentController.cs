@@ -18,7 +18,7 @@ namespace ChelTracker.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("user/{userId}")]
         public IActionResult GetByUserId([FromRoute] int userId)
         {
             try
@@ -37,10 +37,10 @@ namespace ChelTracker.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        [HttpGet("{opponentId}")]
+        public IActionResult GetById([FromRoute] int opponentId)
         {
-            var opponent = _context.Opponents.Find(id);
+            var opponent = _context.Opponents.Find(opponentId);
 
             if (opponent == null)
             {
