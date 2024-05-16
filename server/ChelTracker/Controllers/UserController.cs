@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ChelTracker.Controllers
 {
@@ -17,18 +19,13 @@ namespace ChelTracker.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var users = _context.Users.ToList();
-
-            return Ok(users);
-        }
-
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var user = _context.Users.Find(id);
+            var user = _context.Users
+                            .Include(u => u.Games)
+                            .Include(u => u.Opponents)
+                            .FirstOrDefault(u => u.UserId == id);
 
             if (user == null)
             {
