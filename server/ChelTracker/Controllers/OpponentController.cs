@@ -19,7 +19,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByUserId(int userId)
+        public IActionResult GetByUserId([FromRoute] int userId)
         {
             try
             {
