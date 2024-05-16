@@ -74,5 +74,40 @@ namespace ChelTracker.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = gameModel.Id }, gameModel.ToGameDto());
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateGameRequestDto updateDto)
+        {
+            var gameModel = _context.Games.FirstOrDefault(g => g.Id == id);
+
+            if (gameModel == null)
+            {
+                return NotFound();
+            }
+
+            if (!DateTime.TryParse(updateDto.Date, out DateTime date))
+            {
+                return BadRequest("Invalid date format. Please provide the date in YYYY-MM-DD format.");
+            }
+
+            var dateOnly = new DateOnly(date.Year, date.Month, date.Day);
+
+            gameModel.Date = dateOnly;
+            gameModel.UserTeam = updateDto.UserTeam;
+            gameModel.OpponentTeam = updateDto.OpponentTeam;
+            gameModel.Difficulty = updateDto.Difficulty;
+            gameModel.UserScore = updateDto.UserScore;
+            gameModel.OpponentScore = updateDto.OpponentScore;
+            gameModel.UserShots = updateDto.UserShots;
+            gameModel.OpponentShots = updateDto.OpponentShots;
+            gameModel.UserHits = updateDto.UserHits;
+            gameModel.OpponentHits = updateDto.OpponentHits;
+            gameModel.UserId = updateDto.UserId;
+            gameModel.OpponentId = updateDto.OpponentId;
+            _context.SaveChanges();
+
+            return Ok(gameModel.ToGameDto());
+        }
     }
 }

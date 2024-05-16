@@ -60,5 +60,23 @@ namespace ChelTracker.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { opponentId = opponentModel.OpponentId }, opponentModel.ToOpponentDto());
         }
+
+        [HttpPut]
+        [Route("{opponentId}")]
+
+        public IActionResult Update([FromRoute] int opponentId, [FromBody] UpdateOpponentRequestDto updateDto)
+        {
+            var opponentModel = _context.Opponents.FirstOrDefault(o => o.OpponentId == opponentId);
+
+            if (opponentModel == null)
+            {
+                return NotFound();
+            }
+
+            opponentModel.Name = updateDto.Name;
+            _context.SaveChanges();
+
+            return Ok(opponentModel.ToOpponentDto());
+        }
     }
 }

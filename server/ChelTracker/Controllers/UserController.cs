@@ -45,5 +45,24 @@ namespace ChelTracker.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = userModel.UserId }, userModel.ToUserDto());
         }
+
+        [HttpPut]
+        [Route("{userId}")]
+        public IActionResult Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateDto)
+        {
+            var userModel = _context.Users.FirstOrDefault(u => u.UserId == userId);
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            userModel.Email = updateDto.Email;
+            userModel.Username = updateDto.Username;
+            userModel.Password = updateDto.Password;
+            _context.SaveChanges();
+
+            return Ok(userModel.ToUserDto());
+        }
     }
 }
