@@ -32,12 +32,9 @@ namespace ChelTracker.Models
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public User? User { get; set; }
 
         [ForeignKey("Opponent")]
         public int OpponentId { get; set; }
-        public Opponent? Opponent { get; set; }
-
     }
 
     public enum Difficulty { Rookie, SemiPro, Pro, AllStar, Superstar }
