@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,6 +29,14 @@ namespace ChelTracker.Models
         public int UserHits { get; set; }
 
         public int OpponentHits { get; set; }
+
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User? User { get; set; }
+
+        [ForeignKey("Opponent")]
+        public int OpponentId { get; set; }
+        public Opponent? Opponent { get; set; }
 
     }
 
