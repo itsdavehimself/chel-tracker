@@ -70,8 +70,6 @@ namespace ChelTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OpponentId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Games");
@@ -126,32 +124,20 @@ namespace ChelTracker.Migrations
 
             modelBuilder.Entity("ChelTracker.Models.Game", b =>
                 {
-                    b.HasOne("ChelTracker.Models.Opponent", "Opponent")
-                        .WithMany()
-                        .HasForeignKey("OpponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ChelTracker.Models.User", "User")
+                    b.HasOne("ChelTracker.Models.User", null)
                         .WithMany("Games")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Opponent");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ChelTracker.Models.Opponent", b =>
                 {
-                    b.HasOne("ChelTracker.Models.User", "User")
+                    b.HasOne("ChelTracker.Models.User", null)
                         .WithMany("Opponents")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ChelTracker.Models.User", b =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChelTracker.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240516000504_NewMigrations")]
-    partial class NewMigrations
+    [Migration("20240516143837_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,8 +73,6 @@ namespace ChelTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OpponentId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Games");
@@ -129,32 +127,20 @@ namespace ChelTracker.Migrations
 
             modelBuilder.Entity("ChelTracker.Models.Game", b =>
                 {
-                    b.HasOne("ChelTracker.Models.Opponent", "Opponent")
-                        .WithMany()
-                        .HasForeignKey("OpponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ChelTracker.Models.User", "User")
+                    b.HasOne("ChelTracker.Models.User", null)
                         .WithMany("Games")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Opponent");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ChelTracker.Models.Opponent", b =>
                 {
-                    b.HasOne("ChelTracker.Models.User", "User")
+                    b.HasOne("ChelTracker.Models.User", null)
                         .WithMany("Opponents")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ChelTracker.Models.User", b =>
