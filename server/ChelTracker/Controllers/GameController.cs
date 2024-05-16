@@ -109,5 +109,22 @@ namespace ChelTracker.Controllers
 
             return Ok(gameModel.ToGameDto());
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var gameModel = _context.Games.FirstOrDefault(g => g.Id == id);
+
+            if (gameModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Games.Remove(gameModel);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

@@ -78,5 +78,22 @@ namespace ChelTracker.Controllers
 
             return Ok(opponentModel.ToOpponentDto());
         }
+
+        [HttpDelete]
+        [Route("{opponentId}")]
+        public IActionResult Delete([FromRoute] int opponentId)
+        {
+            var opponentModel = _context.Opponents.FirstOrDefault(o => o.OpponentId == opponentId);
+
+            if (opponentModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Opponents.Remove(opponentModel);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

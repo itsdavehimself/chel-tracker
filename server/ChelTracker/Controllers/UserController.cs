@@ -64,5 +64,22 @@ namespace ChelTracker.Controllers
 
             return Ok(userModel.ToUserDto());
         }
+
+        [HttpDelete]
+        [Route("{userId}")]
+        public IActionResult Delete([FromRoute] int userId)
+        {
+            var userModel = _context.Users.FirstOrDefault(u => u.UserId == userId);
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(userModel);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
