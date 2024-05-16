@@ -18,5 +18,15 @@ namespace ChelTracker.Mappers
                 Email = userModel.Email,
             };
         }
+
+        public static User ToUserFromCreateDto(this CreateUserRequestDto userDto)
+        {
+            return new User
+            {
+                Email = userDto.Email,
+                Username = userDto.Username,
+                Password = userDto.Password,
+            };
+        }
     }
 }

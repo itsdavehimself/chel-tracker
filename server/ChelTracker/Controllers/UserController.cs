@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
+using ChelTracker.Dtos.User;
 using ChelTracker.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,15 @@ namespace ChelTracker.Controllers
             }
 
             return Ok(user.ToUserDto());
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateUserRequestDto userDto)
+        {
+            var userModel = userDto.ToUserFromCreateDto();
+            _context.Users.Add(userModel);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new { id = userModel.UserId }, userModel.ToUserDto());
         }
     }
 }

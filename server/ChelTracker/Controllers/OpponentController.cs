@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
+using ChelTracker.Dtos.Opponent;
 using ChelTracker.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,15 @@ namespace ChelTracker.Controllers
             }
 
             return Ok(opponent.ToOpponentDto());
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateOpponentRequestDto opponentDto)
+        {
+            var opponentModel = opponentDto.ToOpponentFromCreateDto();
+            _context.Opponents.Add(opponentModel);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new { opponentId = opponentModel.OpponentId }, opponentModel.ToOpponentDto());
         }
     }
 }

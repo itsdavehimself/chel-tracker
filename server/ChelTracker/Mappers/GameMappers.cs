@@ -26,5 +26,24 @@ namespace ChelTracker.Mappers
                 OpponentHits = gameModel.OpponentHits,
             };
         }
+
+        public static Game ToGameFromCreateDto(this CreateGameRequestDto gameDto, DateOnly date)
+        {
+            return new Game
+            {
+                Date = date,
+                Difficulty = gameDto.Difficulty,
+                UserTeam = gameDto.UserTeam,
+                OpponentTeam = gameDto.OpponentTeam,
+                UserScore = gameDto.UserScore,
+                OpponentScore = gameDto.OpponentScore,
+                UserShots = gameDto.UserShots,
+                OpponentShots = gameDto.OpponentShots,
+                UserHits = gameDto.UserHits,
+                OpponentHits = gameDto.OpponentHits,
+                UserId = gameDto.UserId,
+                OpponentId = gameDto.OpponentId,
+            };
+        }
     }
 }

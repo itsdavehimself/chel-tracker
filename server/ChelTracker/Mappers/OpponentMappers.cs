@@ -17,5 +17,14 @@ namespace ChelTracker.Mappers
                 Name = opponentModel.Name,
             };
         }
+
+        public static Opponent ToOpponentFromCreateDto(this CreateOpponentRequestDto opponentDto)
+        {
+            return new Opponent
+            {
+                Name = opponentDto.Name,
+                UserId = opponentDto.UserId
+            };
+        }
     }
 }

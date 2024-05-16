@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
+using ChelTracker.Dtos.Game;
 using ChelTracker.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +56,23 @@ namespace ChelTracker.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateGameRequestDto gameDto)
+        {
+
+            if (!DateTime.TryParse(gameDto.Date, out DateTime date))
+            {
+                return BadRequest("Invalid date format. Please provide the date in YYYY-MM-DD format.");
+            }
+
+            var dateOnly = new DateOnly(date.Year, date.Month, date.Day);
+
+            var gameModel = gameDto.ToGameFromCreateDto(dateOnly);
+            _context.Games.Add(gameModel);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new { id = gameModel.Id }, gameModel.ToGameDto());
         }
     }
 }
