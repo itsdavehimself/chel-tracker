@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
+using ChelTracker.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChelTracker.Controllers
@@ -23,8 +24,8 @@ namespace ChelTracker.Controllers
         {
             try
             {
-                var opponents = _context.Opponents.Where(o => o.UserId == userId).ToList();
-                if (opponents.Count == 0)
+                var opponents = _context.Opponents.Where(o => o.UserId == userId).ToList().Select(o => o.ToOpponentDto());
+                if (!opponents.Any())
                 {
                     return NotFound();
                 }
@@ -47,7 +48,7 @@ namespace ChelTracker.Controllers
                 return NotFound();
             }
 
-            return Ok(opponent);
+            return Ok(opponent.ToOpponentDto());
         }
     }
 }
