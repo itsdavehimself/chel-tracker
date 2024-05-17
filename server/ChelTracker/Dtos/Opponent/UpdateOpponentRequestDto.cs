@@ -17,6 +17,6 @@ namespace ChelTracker.Dtos.Opponent
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "A userID is required.")]
-        public int UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
     }
 }

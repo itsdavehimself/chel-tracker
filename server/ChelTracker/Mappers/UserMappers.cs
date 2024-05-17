@@ -13,9 +13,9 @@ namespace ChelTracker.Mappers
         {
             return new UserDto
             {
-                UserId = userModel.UserId,
-                Username = userModel.Username,
-                Email = userModel.Email,
+                Id = userModel.Id,
+                UserName = userModel.UserName ?? "",
+                Email = userModel.Email ?? "",
                 Games = userModel.Games.Select(g => g.ToGameDto()).ToList(),
                 Opponents = userModel.Opponents.Select(o => o.ToOpponentDto()).ToList()
             };
@@ -26,8 +26,8 @@ namespace ChelTracker.Mappers
             return new User
             {
                 Email = userDto.Email,
-                Username = userDto.Username,
-                Password = userDto.Password,
+                UserName = userDto.Username,
+                PasswordHash = userDto.Password,
             };
         }
     }

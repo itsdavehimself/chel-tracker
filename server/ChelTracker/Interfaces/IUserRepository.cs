@@ -9,15 +9,15 @@ namespace ChelTracker.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User?> GetUserByIdAsync(int userId);
+        Task<User?> GetUserByIdAsync(string userId);
 
         Task<User> CreateUserAsync(User userModel);
 
-        Task<User?> UpdateUserAsync(int userId, UpdateUserRequestDto updateDto);
+        Task<User?> UpdateUserAsync(string userId, UpdateUserRequestDto updateDto);
 
-        Task<User?> DeleteUserAsync(int userId);
+        Task<User?> DeleteUserAsync(string userId);
 
-        Task<bool> UserExists(int userId);
+        Task<bool> UserExists(string userId);
 
     }
 }

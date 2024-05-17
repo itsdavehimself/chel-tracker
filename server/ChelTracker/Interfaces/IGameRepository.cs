@@ -11,7 +11,7 @@ namespace ChelTracker.Interfaces
     {
         Task<Game?> GetGameByIdAsync(int id);
 
-        Task<List<Game>> GetGameByBothUsersAsync(int userId, int opponentId);
+        Task<List<Game>> GetGameByBothUsersAsync(string userId, int opponentId);
 
         Task<Game> CreateGameAsync(Game gameModel);
 

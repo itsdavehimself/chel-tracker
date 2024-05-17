@@ -19,12 +19,12 @@ namespace ChelTracker.Repositories
             _context = context;
         }
 
-        public async Task<User?> GetUserByIdAsync(int userId)
+        public async Task<User?> GetUserByIdAsync(string userId)
         {
             return await _context.Users
                             .Include(u => u.Games)
                             .Include(u => u.Opponents)
-                            .FirstOrDefaultAsync(u => u.UserId == userId);
+                            .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task<User> CreateUserAsync(User userModel)
@@ -34,9 +34,9 @@ namespace ChelTracker.Repositories
             return userModel;
         }
 
-        public async Task<User?> UpdateUserAsync(int userId, UpdateUserRequestDto updateDto)
+        public async Task<User?> UpdateUserAsync(string userId, UpdateUserRequestDto updateDto)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
             if (existingUser == null)
             {
@@ -44,16 +44,16 @@ namespace ChelTracker.Repositories
             }
 
             existingUser.Email = updateDto.Email;
-            existingUser.Username = updateDto.Username;
-            existingUser.Password = updateDto.Password;
+            existingUser.UserName = updateDto.Username;
+            existingUser.PasswordHash = updateDto.Password;
             await _context.SaveChangesAsync();
 
             return existingUser;
         }
 
-        public async Task<User?> DeleteUserAsync(int userId)
+        public async Task<User?> DeleteUserAsync(string userId)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
             if (existingUser == null)
             {
@@ -67,9 +67,9 @@ namespace ChelTracker.Repositories
 
         }
 
-        public async Task<bool> UserExists(int userId)
+        public async Task<bool> UserExists(string userId)
         {
-            return await _context.Users.AnyAsync(u => u.UserId == userId);
+            return await _context.Users.AnyAsync(u => u.Id == userId);
         }
     }
 }

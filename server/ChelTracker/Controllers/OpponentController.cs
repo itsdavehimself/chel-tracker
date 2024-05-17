@@ -25,7 +25,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
+        public async Task<IActionResult> GetByUserId([FromRoute] string userId)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace ChelTracker.Controllers
             }
         }
 
-        [HttpGet("{opponentId}")]
+        [HttpGet("{opponentId:int}")]
         public async Task<IActionResult> GetById([FromRoute] int opponentId)
         {
             if (!ModelState.IsValid)

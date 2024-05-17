@@ -27,7 +27,7 @@ namespace ChelTracker.Mappers
             };
         }
 
-        public static Game ToGameFromCreateDto(this CreateGameRequestDto gameDto, DateOnly date, int userId, int opponentId)
+        public static Game ToGameFromCreateDto(this CreateGameRequestDto gameDto, DateOnly date, string userId, int opponentId)
         {
             return new Game
             {

@@ -24,7 +24,7 @@ namespace ChelTracker.Repositories
             return await _context.Games.FindAsync(id);
         }
 
-        public async Task<List<Game>> GetGameByBothUsersAsync(int userId, int opponentId)
+        public async Task<List<Game>> GetGameByBothUsersAsync(string userId, int opponentId)
         {
             return await _context.Games.Where(g => g.UserId == userId && g.OpponentId == opponentId).ToListAsync();
         }

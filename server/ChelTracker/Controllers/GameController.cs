@@ -80,8 +80,8 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
-        [Route("{userId:int}")]
-        public async Task<IActionResult> Create([FromRoute] int userId, int opponentId, [FromBody] CreateGameRequestDto gameDto)
+        [Route("{userId}")]
+        public async Task<IActionResult> Create([FromRoute] string userId, int opponentId, [FromBody] CreateGameRequestDto gameDto)
         {
             if (!ModelState.IsValid)
             {

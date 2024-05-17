@@ -12,6 +12,6 @@ namespace ChelTracker.Models
         public string Name { get; set; } = string.Empty;
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
     }
 }

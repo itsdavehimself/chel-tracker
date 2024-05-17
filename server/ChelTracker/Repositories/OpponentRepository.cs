@@ -20,7 +20,7 @@ namespace ChelTracker.Repositories
             _context = context;
         }
 
-        public async Task<List<Opponent>> GetAllUsersOpponentsAsync(int userId)
+        public async Task<List<Opponent>> GetAllUsersOpponentsAsync(string userId)
         {
             return await _context.Opponents.Where(o => o.UserId == userId).ToListAsync();
         }

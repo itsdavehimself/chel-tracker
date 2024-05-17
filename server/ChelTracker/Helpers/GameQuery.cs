@@ -9,7 +9,7 @@ namespace ChelTracker.Helpers
     public class GameQuery
     {
         [Required(ErrorMessage = "UserId is required")]
-        public int UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "OpponentId is required")]
         public int OpponentId { get; set; }

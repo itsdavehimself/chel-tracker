@@ -9,7 +9,7 @@ namespace ChelTracker.Interfaces
 {
     public interface IOpponentRepository
     {
-        Task<List<Opponent>> GetAllUsersOpponentsAsync(int userId);
+        Task<List<Opponent>> GetAllUsersOpponentsAsync(string userId);
 
         Task<Opponent?> GetOpponentByIdAsync(int opponentId);
 

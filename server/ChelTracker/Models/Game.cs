@@ -31,7 +31,7 @@ namespace ChelTracker.Models
         public int OpponentHits { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
         [ForeignKey("Opponent")]
         public int OpponentId { get; set; }
