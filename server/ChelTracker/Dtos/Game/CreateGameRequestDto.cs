@@ -28,8 +28,5 @@ namespace ChelTracker.Dtos.Game
 
         public int OpponentHits { get; set; }
 
-        public int UserId { get; set; }
-
-        public int OpponentId { get; set; }
     }
 }
