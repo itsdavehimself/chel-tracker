@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
 using ChelTracker.Dtos.Game;
+using ChelTracker.Helpers;
 using ChelTracker.Interfaces;
 using ChelTracker.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +53,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByUserIdAndOpponentId([FromQuery(Name = "user")] int userId, [FromQuery(Name = "opponent")] int opponentId)
+        public async Task<IActionResult> GetByUserIdAndOpponentId([FromQuery] GameQuery query)
         {
             try
             {
@@ -61,7 +62,7 @@ namespace ChelTracker.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var games = await _gameRepository.GetGameByBothUsersAsync(userId, opponentId);
+                var games = await _gameRepository.GetGameByBothUsersAsync(query.UserId, query.OpponentId);
 
                 var gamesDto = games.Select(g => g.ToGameDto());
 
