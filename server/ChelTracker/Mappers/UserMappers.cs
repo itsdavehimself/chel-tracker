@@ -16,6 +16,8 @@ namespace ChelTracker.Mappers
                 UserId = userModel.UserId,
                 Username = userModel.Username,
                 Email = userModel.Email,
+                Games = userModel.Games.Select(g => g.ToGameDto()).ToList(),
+                Opponents = userModel.Opponents.Select(o => o.ToOpponentDto()).ToList()
             };
         }
 
