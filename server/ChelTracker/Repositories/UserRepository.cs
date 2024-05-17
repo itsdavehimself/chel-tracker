@@ -66,5 +66,10 @@ namespace ChelTracker.Repositories
             return existingUser;
 
         }
+
+        public async Task<bool> UserExists(int userId)
+        {
+            return await _context.Users.AnyAsync(u => u.UserId == userId);
+        }
     }
 }

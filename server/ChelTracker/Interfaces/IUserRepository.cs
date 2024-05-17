@@ -17,5 +17,7 @@ namespace ChelTracker.Interfaces
 
         Task<User?> DeleteUserAsync(int userId);
 
+        Task<bool> UserExists(int userId);
+
     }
 }

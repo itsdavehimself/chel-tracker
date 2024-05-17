@@ -18,5 +18,7 @@ namespace ChelTracker.Interfaces
         Task<Opponent?> UpdateOpponentAsync(int opponentId, UpdateOpponentRequestDto opponentDto);
 
         Task<Opponent?> DeleteOpponentAsync(int opponentId);
+
+        Task<bool> OpponentExists(int opponentId);
     }
 }

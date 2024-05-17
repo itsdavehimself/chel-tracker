@@ -64,5 +64,10 @@ namespace ChelTracker.Repositories
             await _context.SaveChangesAsync();
             return existingOpponent;
         }
+
+        public async Task<bool> OpponentExists(int opponentId)
+        {
+            return await _context.Opponents.AnyAsync(o => o.OpponentId == opponentId);
+        }
     }
 }
