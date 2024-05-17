@@ -24,9 +24,14 @@ namespace ChelTracker.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var user = await _userRepository.GetUserByIdAsync(id);
 
             if (user == null)
@@ -40,15 +45,25 @@ namespace ChelTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserRequestDto userDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var userModel = userDto.ToUserFromCreateDto();
             await _userRepository.CreateUserAsync(userModel);
             return CreatedAtAction(nameof(GetById), new { id = userModel.UserId }, userModel.ToUserDto());
         }
 
         [HttpPut]
-        [Route("{userId}")]
+        [Route("{userId:int}")]
         public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UpdateUserRequestDto updateDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var userModel = await _userRepository.UpdateUserAsync(userId, updateDto);
 
             if (userModel == null)
@@ -60,9 +75,14 @@ namespace ChelTracker.Controllers
         }
 
         [HttpDelete]
-        [Route("{userId}")]
+        [Route("{userId:int}")]
         public async Task<IActionResult> Delete([FromRoute] int userId)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var userModel = await _userRepository.DeleteUserAsync(userId);
 
             if (userModel == null)

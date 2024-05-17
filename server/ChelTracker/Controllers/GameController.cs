@@ -32,9 +32,15 @@ namespace ChelTracker.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var game = await _gameRepository.GetGameByIdAsync(id);
 
             if (game == null)
@@ -50,6 +56,11 @@ namespace ChelTracker.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var games = await _gameRepository.GetGameByBothUsersAsync(userId, opponentId);
 
                 var gamesDto = games.Select(g => g.ToGameDto());
@@ -68,9 +79,13 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
-        [Route("{userId}")]
+        [Route("{userId:int}")]
         public async Task<IActionResult> Create([FromRoute] int userId, int opponentId, [FromBody] CreateGameRequestDto gameDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             if (!await _userRepository.UserExists(userId) && !await _opponentRepository.OpponentExists(opponentId))
             {
@@ -90,9 +105,14 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateGameRequestDto updateDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var gameModel = await _gameRepository.UpdateGameAsync(id, updateDto);
 
             if (gameModel == null)
@@ -104,9 +124,14 @@ namespace ChelTracker.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var gameModel = await _gameRepository.DeleteGameAsync(id);
 
             if (gameModel == null)
