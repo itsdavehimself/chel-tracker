@@ -47,7 +47,7 @@ namespace ChelTracker.Repositories
 
             if (!DateTime.TryParse(updateDto.Date, out DateTime date))
             {
-                return existingGame;
+                throw new ArgumentException("Invalid date format. Date must be in the format YYYY-MM-DD.");
             }
 
             var dateOnly = new DateOnly(date.Year, date.Month, date.Day);
@@ -62,8 +62,6 @@ namespace ChelTracker.Repositories
             existingGame.OpponentShots = updateDto.OpponentShots;
             existingGame.UserHits = updateDto.UserHits;
             existingGame.OpponentHits = updateDto.OpponentHits;
-            existingGame.UserId = updateDto.UserId;
-            existingGame.OpponentId = updateDto.OpponentId;
 
             await _context.SaveChangesAsync();
 
