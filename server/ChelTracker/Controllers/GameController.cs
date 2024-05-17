@@ -20,9 +20,15 @@ namespace ChelTracker.Controllers
 
         private readonly IGameRepository _gameRepository;
 
-        public GameController(ApplicationDBContext context, IGameRepository gameRepository)
+        private readonly IUserRepository _userRepository;
+
+        private readonly IOpponentRepository _opponentRepository;
+
+        public GameController(ApplicationDBContext context, IGameRepository gameRepository, IUserRepository userRepository, IOpponentRepository opponentRepository)
         {
             _gameRepository = gameRepository;
+            _userRepository = userRepository;
+            _opponentRepository = opponentRepository;
             _context = context;
         }
 
@@ -62,8 +68,14 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateGameRequestDto gameDto)
+        [Route("{userId}")]
+        public async Task<IActionResult> Create([FromRoute] int userId, int opponentId, [FromBody] CreateGameRequestDto gameDto)
         {
+
+            if (!await _userRepository.UserExists(userId) && !await _opponentRepository.OpponentExists(opponentId))
+            {
+                return BadRequest("User or Opponent does not exist!");
+            }
 
             if (!DateTime.TryParse(gameDto.Date, out DateTime date))
             {
@@ -72,7 +84,7 @@ namespace ChelTracker.Controllers
 
             var dateOnly = new DateOnly(date.Year, date.Month, date.Day);
 
-            var gameModel = gameDto.ToGameFromCreateDto(dateOnly);
+            var gameModel = gameDto.ToGameFromCreateDto(dateOnly, userId, opponentId);
             await _gameRepository.CreateGameAsync(gameModel);
             return CreatedAtAction(nameof(GetById), new { id = gameModel.Id }, gameModel.ToGameDto());
         }
