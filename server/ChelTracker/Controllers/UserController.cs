@@ -6,6 +6,8 @@ using ChelTracker.Data;
 using ChelTracker.Dtos.User;
 using ChelTracker.Interfaces;
 using ChelTracker.Mappers;
+using ChelTracker.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,81 +18,51 @@ namespace ChelTracker.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
-        private readonly IUserRepository _userRepository;
-        public UserController(ApplicationDBContext context, IUserRepository userRepository)
+        private readonly UserManager<User> _userManager;
+        public UserController(UserManager<User> userManager)
         {
-            _userRepository = userRepository;
-            _context = context;
+            _userManager = userManager;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] string id)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] CreateUserRequestDto userDto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var user = new User
+                {
+                    UserName = userDto.Username,
+                    Email = userDto.Email
+                };
+
+                var createdUser = await _userManager.CreateAsync(user, userDto.Password);
+
+                if (createdUser.Succeeded)
+                {
+                    var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                    if (roleResult.Succeeded)
+                    {
+                        return Ok("User created.");
+                    }
+                    else
+                    {
+                        return StatusCode(500, roleResult.Errors);
+                    }
+                }
+                else
+                {
+                    return StatusCode(500, createdUser.Errors);
+                }
             }
-
-            var user = await _userRepository.GetUserByIdAsync(id);
-
-            if (user == null)
+            catch (Exception e)
             {
-                return NotFound();
+                return StatusCode(500, e);
             }
-
-            return Ok(user.ToUserDto());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUserRequestDto userDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var userModel = userDto.ToUserFromCreateDto();
-            await _userRepository.CreateUserAsync(userModel);
-            return CreatedAtAction(nameof(GetById), new { id = userModel.Id }, userModel.ToUserDto());
-        }
-
-        [HttpPut]
-        [Route("{userId}")]
-        public async Task<IActionResult> Update([FromRoute] string userId, [FromBody] UpdateUserRequestDto updateDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var userModel = await _userRepository.UpdateUserAsync(userId, updateDto);
-
-            if (userModel == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(userModel.ToUserDto());
-        }
-
-        [HttpDelete]
-        [Route("{userId}")]
-        public async Task<IActionResult> Delete([FromRoute] string userId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var userModel = await _userRepository.DeleteUserAsync(userId);
-
-            if (userModel == null)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
         }
     }
 }

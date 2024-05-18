@@ -14,10 +14,10 @@ namespace ChelTracker.Mappers
             return new UserDto
             {
                 Id = userModel.Id,
-                UserName = userModel.UserName ?? "",
+                Username = userModel.UserName ?? "",
                 Email = userModel.Email ?? "",
-                Games = userModel.Games.Select(g => g.ToGameDto()).ToList(),
-                Opponents = userModel.Opponents.Select(o => o.ToOpponentDto()).ToList()
+                // Games = userModel.Games.Select(g => g.ToGameDto()).ToList(),
+                // Opponents = userModel.Opponents.Select(o => o.ToOpponentDto()).ToList()
             };
         }
 
