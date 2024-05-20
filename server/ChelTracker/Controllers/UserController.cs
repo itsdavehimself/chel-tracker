@@ -19,9 +19,11 @@ namespace ChelTracker.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        public UserController(UserManager<User> userManager)
+        private readonly ITokenService _tokenSerivce;
+        public UserController(UserManager<User> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenSerivce = tokenService;
         }
 
         [HttpPost("register")]
@@ -47,7 +49,14 @@ namespace ChelTracker.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(user, "User");
                     if (roleResult.Succeeded)
                     {
-                        return Ok("User created.");
+                        return Ok(
+                            new NewUserDto
+                            {
+                                UserName = user.UserName,
+                                Email = user.Email,
+                                Token = _tokenSerivce.CreateToken(user),
+                            }
+                        );
                     }
                     else
                     {
