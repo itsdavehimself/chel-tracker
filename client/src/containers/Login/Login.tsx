@@ -62,7 +62,6 @@ const Login: React.FC = () => {
                               ? 'Please fill out all fields.'
                               : ''}
                     </div>
-
                     <div className={styles['signup-container']}>
                         Still have all your teeth?{' '}
                         <Link to="/signup">Sign up</Link>
