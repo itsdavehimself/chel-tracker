@@ -20,9 +20,11 @@ namespace ChelTracker.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _tokenSerivce;
-        public UserController(UserManager<User> userManager, ITokenService tokenService)
+        private readonly SignInManager<User> _signInManager;
+        public UserController(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _tokenSerivce = tokenService;
         }
 
@@ -72,6 +74,37 @@ namespace ChelTracker.Controllers
             {
                 return StatusCode(500, e);
             }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == loginDto.UserName.ToLower());
+
+            if (user == null) return Unauthorized("Invalid username");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded) return Unauthorized("Incorrect username or password.");
+
+            if (user.UserName == null || user.Email == null)
+            {
+                return BadRequest("Username or email cannot be null.");
+            }
+
+            return Ok(
+                new NewUserDto
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Token = _tokenSerivce.CreateToken(user)
+                }
+            );
         }
     }
 }
