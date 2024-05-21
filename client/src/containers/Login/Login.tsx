@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Login: React.FC = () => {
     return (
-        <div className={styles.login}>
+        <div className={styles.auth}>
             <div className={styles['auth-container']}>
                 <h1>Welcome back to the barn, ya beauty.</h1>
                 <form className={styles['auth-form']}>
