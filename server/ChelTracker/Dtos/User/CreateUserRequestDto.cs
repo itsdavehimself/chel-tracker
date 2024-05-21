@@ -10,6 +10,7 @@ namespace ChelTracker.Dtos.User
     {
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [RegularExpression(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", ErrorMessage = "Invalid email address format.")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Username is required.")]
@@ -22,7 +23,7 @@ namespace ChelTracker.Dtos.User
         [MinLength(5, ErrorMessage = "Password must be 5 characters or more.")]
         [MaxLength(15, ErrorMessage = "Password must be 15 characters or less.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
-        ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character")]
+        ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.")]
         public string Password { get; set; } = string.Empty;
     }
 }
