@@ -6,6 +6,7 @@ interface AuthInputProps {
     type: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     error: boolean;
+    errorArray?: string[];
 }
 
 const AuthInput: React.FC<AuthInputProps> = ({
@@ -14,6 +15,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
     type,
     onChange,
     error,
+    errorArray,
 }) => {
     return (
         <div className={styles['auth-input']}>
@@ -26,6 +28,15 @@ const AuthInput: React.FC<AuthInputProps> = ({
                 placeholder={label}
                 onChange={onChange}
             ></input>
+            {errorArray ? (
+                <div className={styles['error-text']}>
+                    {errorArray?.map((error, index) => (
+                        <div key={index}>{error}</div>
+                    ))}
+                </div>
+            ) : (
+                ''
+            )}
         </div>
     );
 };

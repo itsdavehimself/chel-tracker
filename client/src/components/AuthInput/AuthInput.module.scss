@@ -21,3 +21,10 @@ input {
     border-color: variables.$accent-color;
     transition: all 0.2s ease-in-out;
 }
+
+.error-text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+    color: variables.$accent-color;
+}
