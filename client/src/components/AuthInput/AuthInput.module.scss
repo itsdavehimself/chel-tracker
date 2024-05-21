@@ -14,4 +14,10 @@ input {
     background-color: variables.$secondary-color;
     border: variables.$primary-color 1px solid;
     border-radius: 0.4rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.error {
+    border-color: variables.$accent-color;
+    transition: all 0.2s ease-in-out;
 }

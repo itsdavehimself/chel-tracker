@@ -5,6 +5,7 @@ interface AuthInputProps {
     inputIdentifier: string;
     type: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    error: boolean;
 }
 
 const AuthInput: React.FC<AuthInputProps> = ({
@@ -12,11 +13,13 @@ const AuthInput: React.FC<AuthInputProps> = ({
     inputIdentifier,
     type,
     onChange,
+    error,
 }) => {
     return (
         <div className={styles['auth-input']}>
             <label htmlFor={inputIdentifier}>{label}</label>
             <input
+                className={`${error ? styles.error : ''}`}
                 type={type}
                 id={inputIdentifier}
                 name={inputIdentifier}
