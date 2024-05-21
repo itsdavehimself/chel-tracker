@@ -41,6 +41,11 @@
     width: 100%;
 }
 
+.error {
+    color: variables.$accent-color;
+    height: 2rem;
+}
+
 .signup-container {
     a {
         text-decoration: none;
