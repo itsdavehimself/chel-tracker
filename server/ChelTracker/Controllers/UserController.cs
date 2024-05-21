@@ -86,15 +86,16 @@ namespace ChelTracker.Controllers
 
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == loginDto.UserName.ToLower());
 
-            if (user == null) return Unauthorized("Invalid username");
+            if (user == null) return Unauthorized(new { error = "Unauthorized", message = "Invalid username or password." });
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if (!result.Succeeded) return Unauthorized("Incorrect username or password.");
+            if (!result.Succeeded) return Unauthorized(new { error = "Unauthorized", message = "Invalid username or password." });
+
 
             if (user.UserName == null || user.Email == null)
             {
-                return BadRequest("Username or email cannot be null.");
+                return BadRequest(new { error = "Unauthorized", message = "Username or email cannot be empty." });
             }
 
             return Ok(
