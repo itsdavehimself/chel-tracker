@@ -7,6 +7,7 @@ using ChelTracker.Dtos.Game;
 using ChelTracker.Helpers;
 using ChelTracker.Interfaces;
 using ChelTracker.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
 
@@ -53,6 +55,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetByUserIdAndOpponentId([FromQuery] GameQuery query)
         {
             try
@@ -81,6 +84,7 @@ namespace ChelTracker.Controllers
 
         [HttpPost]
         [Route("{userId}")]
+        [Authorize]
         public async Task<IActionResult> Create([FromRoute] string userId, int opponentId, [FromBody] CreateGameRequestDto gameDto)
         {
             if (!ModelState.IsValid)
@@ -107,6 +111,7 @@ namespace ChelTracker.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateGameRequestDto updateDto)
         {
             if (!ModelState.IsValid)
@@ -126,6 +131,7 @@ namespace ChelTracker.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)

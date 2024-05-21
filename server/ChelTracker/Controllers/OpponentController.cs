@@ -6,6 +6,7 @@ using ChelTracker.Data;
 using ChelTracker.Dtos.Opponent;
 using ChelTracker.Interfaces;
 using ChelTracker.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ namespace ChelTracker.Controllers
 {
     [Route("api/opponent")]
     [ApiController]
+    [Authorize]
     public class OpponentController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
@@ -25,6 +27,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("user/{userId}")]
+        [Authorize]
         public async Task<IActionResult> GetByUserId([FromRoute] string userId)
         {
             try
@@ -52,6 +55,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpGet("{opponentId:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int opponentId)
         {
             if (!ModelState.IsValid)
@@ -70,6 +74,7 @@ namespace ChelTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateOpponentRequestDto opponentDto)
         {
             if (!ModelState.IsValid)
@@ -84,6 +89,7 @@ namespace ChelTracker.Controllers
 
         [HttpPut]
         [Route("{opponentId:int}")]
+        [Authorize]
 
         public async Task<IActionResult> Update([FromRoute] int opponentId, [FromBody] UpdateOpponentRequestDto updateDto)
         {
@@ -104,6 +110,7 @@ namespace ChelTracker.Controllers
 
         [HttpDelete]
         [Route("{opponentId:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int opponentId)
         {
             if (!ModelState.IsValid)
