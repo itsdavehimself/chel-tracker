@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.scss';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Login from './containers/Login/Login';
