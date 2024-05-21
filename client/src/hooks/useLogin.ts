@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 
-const API_BASE_URL: string = 'http://localhost:5042/api';
+const API_BASE_URL: string =
+    import.meta.env.VITE_API_BASE_URL || 'http://localhost:5042/api';
 
 interface LoginResult {
     login: (email: string, password: string) => Promise<void>;
@@ -30,7 +31,7 @@ const useLogin = (): LoginResult => {
 
         if (!loginResponse.ok) {
             setIsLoading(false);
-            setError(loginJSON.error);
+            setError(loginJSON);
         }
 
         if (loginResponse.ok) {
