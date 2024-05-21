@@ -1,0 +1,55 @@
+@use '../../variables';
+
+.login {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 5rem);
+    width: 100wv;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2rem;
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    h2 {
+        margin: 0;
+        align-self: start;
+    }
+}
+
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    row-gap: 0.6rem;
+}
+
+.auth-btns {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.signup-container {
+    a {
+        text-decoration: none;
+        color: variables.$accent-color;
+        transition: color 0.2s ease-in-out;
+    }
+
+    a:hover {
+        color: variables.$accent-color-hover;
+        transition: color 0.2s ease-in-out;
+    }
+}
