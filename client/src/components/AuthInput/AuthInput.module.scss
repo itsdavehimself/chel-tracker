@@ -1,0 +1,17 @@
+@use '../../variables';
+
+.auth-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 0.4rem;
+}
+
+input {
+    height: 2.4rem;
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    background-color: variables.$secondary-color;
+    border: variables.$primary-color 1px solid;
+    border-radius: 0.4rem;
+}
