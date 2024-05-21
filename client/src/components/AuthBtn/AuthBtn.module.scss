@@ -7,11 +7,11 @@
     background-color: variables.$accent-color;
     color: variables.$secondary-color;
     border: 1px solid variables.$accent-color;
-    padding: 0.75rem 1.2rem;
     font-size: 1rem;
     font-weight: 500;
     border-radius: 0.5rem;
     transition: all 0.2s ease-in-out;
+    height: 2.4rem;
 }
 
 .auth-btn:hover {
@@ -20,4 +20,24 @@
     border: 1px solid variables.$accent-color;
     color: variables.$accent-color;
     transition: all 0.2s ease-in-out;
+}
+
+.loading-spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid variables.$secondary-color;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
