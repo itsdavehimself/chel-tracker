@@ -4,12 +4,14 @@ interface AuthInputProps {
     label: string;
     inputIdentifier: string;
     type: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const AuthInput: React.FC<AuthInputProps> = ({
     label,
     inputIdentifier,
     type,
+    onChange,
 }) => {
     return (
         <div className={styles['auth-input']}>
@@ -19,6 +21,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
                 id={inputIdentifier}
                 name={inputIdentifier}
                 placeholder={label}
+                onChange={onChange}
             ></input>
         </div>
     );
