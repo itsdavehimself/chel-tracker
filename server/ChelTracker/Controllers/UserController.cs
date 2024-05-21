@@ -102,6 +102,7 @@ namespace ChelTracker.Controllers
                 {
                     UserName = user.UserName,
                     Email = user.Email,
+                    Id = user.Id,
                     Token = _tokenSerivce.CreateToken(user)
                 }
             );
