@@ -1,0 +1,86 @@
+@use '../../variables';
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    padding: 1.4rem;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.modal-btn {
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    font-size: 1.4rem;
+    border: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.modal-btn:hover {
+    cursor: pointer;
+    color: variables.$secondary-darker;
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-menu-modal {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    z-index: 2;
+
+    a {
+        text-decoration: none;
+        transition: color 0.2s ease-in-out;
+    }
+
+    a:visited {
+        color: variables.$secondary-color;
+    }
+
+    a:hover {
+        cursor: pointer;
+        color: variables.$secondary-darker;
+        transition: color 0.2s ease-in-out;
+    }
+}
+
+.btn-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1.4rem;
+    height: 5rem;
+    width: 100%;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    row-gap: 2rem;
+    font-size: 6rem;
+    padding: 1.4rem;
+}
+
+.modal-nav-btn {
+    background-color: variables.$primary-color;
+    color: variables.$secondary-color;
+    border: none;
+    width: fit-content;
+}
+
+.modal-nav-btn:hover {
+    cursor: pointer;
+    color: variables.$secondary-darker;
+    transition: color 0.2s ease-in-out;
+}
