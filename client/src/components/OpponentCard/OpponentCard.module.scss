@@ -1,0 +1,65 @@
+@use '../../variables';
+
+.opponent-card {
+    display: grid;
+    grid-template-columns: 8rem 1fr 1rem;
+    align-items: center;
+    background-color: variables.$secondary-light;
+    border-radius: 0.4rem;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+    padding: 1.4rem;
+    row-gap: 0.4rem;
+}
+
+.opponent-card:hover {
+    cursor: pointer;
+    background-color: variables.$secondary-medium;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.record {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-right: 1px solid variables.$secondary-darker;
+}
+
+.name {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.latest-game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 1rem;
+}
+
+.latest-title {
+    font-weight: 600;
+}
+
+.latest-game-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-arrow {
+    color: variables.$primary-color;
+    justify-self: flex-end;
+    align-self: center;
+}
+
+.loss {
+    color: variables.$accent-color;
+}
+
+.win {
+    color: variables.$green-color;
+}
