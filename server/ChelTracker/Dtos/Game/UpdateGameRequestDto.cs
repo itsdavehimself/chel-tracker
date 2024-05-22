@@ -57,5 +57,61 @@ namespace ChelTracker.Dtos.Game
         [Required(ErrorMessage = "Opponent hits is required.")]
         [Range(0, 99, ErrorMessage = "Opponent hits must be between 0 and 99.")]
         public int OpponentHits { get; set; }
+
+        [Required(ErrorMessage = "User time on attack is required.")]
+        [Range(0, 9999, ErrorMessage = "User time on attack must be between 0 and 9999.")]
+        public int UserTimeOnAttack { get; set; }
+
+        [Required(ErrorMessage = "Opponent time on attack is required.")]
+        [Range(0, 9999, ErrorMessage = "Opponent time on attack must be between 0 and 9999.")]
+        public int OpponentTimeOnAttack { get; set; }
+
+        [Required(ErrorMessage = "User passing percentage is required.")]
+        [Range(0, 100, ErrorMessage = "User passing percentage must be between 0 and 100.")]
+        public float UserPassingPercentage { get; set; }
+
+        [Required(ErrorMessage = "Opponent passing percentage is required.")]
+        [Range(0, 100, ErrorMessage = "Opponent passing percentage must be between 0 and 100.")]
+        public float OpponentPassingPercentage { get; set; }
+
+        [Required(ErrorMessage = "User faceoff wins is required.")]
+        [Range(0, 100, ErrorMessage = "User faceoff wins must be between 0 and 100.")]
+        public int UserFaceOffWins { get; set; }
+
+        [Required(ErrorMessage = "Opponent faceoff wins is required.")]
+        [Range(0, 100, ErrorMessage = "Opponent faceoff wins must be between 0 and 100.")]
+        public int OpponentFaceOffWins { get; set; }
+
+        [Required(ErrorMessage = "User penalty minutes is required.")]
+        [Range(0, 100, ErrorMessage = "User penalty minutes must be between 0 and 100.")]
+        public int UserPenaltyMinutes { get; set; }
+
+        [Required(ErrorMessage = "Opponent penalty minutes is required.")]
+        [Range(0, 100, ErrorMessage = "Opponent penalty minutes must be between 0 and 100.")]
+        public int OpponentPenaltyMinutes { get; set; }
+
+        [Required(ErrorMessage = "User powerplay percentage is required.")]
+        [Range(0, 100, ErrorMessage = "User powerplay percentage must be between 0 and 100.")]
+        public float UserPowerPlayPercentage { get; set; }
+
+        [Required(ErrorMessage = "Opponent powerplay percentage is required.")]
+        [Range(0, 100, ErrorMessage = "Opponent powerplay percentage must be between 0 and 100.")]
+        public float OpponentPowerPlayPercentage { get; set; }
+
+        [Required(ErrorMessage = "User powerplay minutes is required.")]
+        [Range(0, 100, ErrorMessage = "User powerplay minutes must be between 0 and 100.")]
+        public int UserPowerPlayMinutes { get; set; }
+
+        [Required(ErrorMessage = "Opponent powerplay minutes is required.")]
+        [Range(0, 100, ErrorMessage = "Opponent powerplay minutes must be between 0 and 100.")]
+        public int OpponentPowerPlayMinutes { get; set; }
+
+        [Required(ErrorMessage = "User shorthanded goals is required.")]
+        [Range(0, 100, ErrorMessage = "User shorthanded goals must be between 0 and 100.")]
+        public int UserShortHandedGoals { get; set; }
+
+        [Required(ErrorMessage = "Opponent shorthanded goals is required.")]
+        [Range(0, 100, ErrorMessage = "Opponent shorthanded goals must be between 0 and 100.")]
+        public int OpponentShortHandedGoals { get; set; }
     }
 }
