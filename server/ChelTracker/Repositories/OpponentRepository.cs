@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChelTracker.Data;
 using ChelTracker.Dtos.Opponent;
+using ChelTracker.Dtos.Game;
 using ChelTracker.Interfaces;
 using ChelTracker.Models;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,30 @@ namespace ChelTracker.Repositories
         {
             return await _context.Opponents.Where(o => o.UserId == userId).ToListAsync();
         }
+
+        public async Task<List<OpponentWithStats>> GetOpponentsWithStatsAsync(string userId)
+        {
+            var result = await _context.Opponents
+                .Where(o => o.UserId == userId)
+                .Select(o => new OpponentWithStats
+                {
+                    Opponent = new OpponentDto { OpponentId = o.OpponentId, Name = o.Name },
+                    Games = _context.Games
+                        .Where(g => g.UserId == userId && g.OpponentId == o.OpponentId)
+                        .Select(g => new DashboardGameDto
+                        {
+                            UserScore = g.UserScore,
+                            OpponentScore = g.OpponentScore,
+                            Date = g.Date
+                        })
+                        .ToList()
+                })
+                .ToListAsync();
+
+            return result;
+        }
+
+
 
         public async Task<Opponent?> GetOpponentByIdAsync(int opponentId)
         {

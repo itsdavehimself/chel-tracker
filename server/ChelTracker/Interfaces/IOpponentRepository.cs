@@ -11,6 +11,8 @@ namespace ChelTracker.Interfaces
     {
         Task<List<Opponent>> GetAllUsersOpponentsAsync(string userId);
 
+        Task<List<OpponentWithStats>> GetOpponentsWithStatsAsync(string userId);
+
         Task<Opponent?> GetOpponentByIdAsync(int opponentId);
 
         Task<Opponent> CreateOpponentAsync(Opponent opponentModel);

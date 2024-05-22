@@ -54,6 +54,20 @@ namespace ChelTracker.Controllers
             }
         }
 
+        [HttpGet("user/{userId}/opponents-with-stats")]
+        public async Task<IActionResult> GetOpponentsWithStats(string userId)
+        {
+            try
+            {
+                var opponentsWithStats = await _opponentRepository.GetOpponentsWithStatsAsync(userId);
+                return Ok(opponentsWithStats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet("{opponentId:int}")]
         [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int opponentId)
