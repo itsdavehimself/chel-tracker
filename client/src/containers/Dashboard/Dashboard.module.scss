@@ -1,0 +1,24 @@
+@use '../../variables';
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2rem;
+    row-gap: 2rem;
+}
+
+.opponents-title {
+    align-self: flex-start;
+    margin: 0;
+}
+
+.opponent-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1rem;
+    width: 100%;
+}
