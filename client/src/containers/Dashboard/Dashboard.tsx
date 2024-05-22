@@ -13,7 +13,7 @@ const API_BASE_URL: string =
 
 export type OpponentInfo = {
     name: string;
-    id: number;
+    opponentId: number;
 };
 
 export type GameInfo = {
@@ -76,9 +76,7 @@ const Dashboard: React.FC = () => {
             ) : (
                 <>
                     <LatestGame />
-                    <h2 className={styles['opponents-title']}>
-                        Your Opponents
-                    </h2>
+                    <h2 className={styles['section-title']}>Your Opponents</h2>
                     <PrimaryButton icon={plusIcon} text="ADD OPPONENT" />
                     <div className={styles['opponent-cards']}>
                         {opponentsInfo.map((opponent, index) => (
