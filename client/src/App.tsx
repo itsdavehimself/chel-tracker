@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.scss';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Login from './containers/Login/Login';
-import Navbar from './containers/Navbar/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import SignUp from './containers/SignUp/SignUp';
 import { useAuthContext } from './hooks/useAuthContext';
 
