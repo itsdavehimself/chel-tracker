@@ -4,6 +4,7 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import Login from './containers/Login/Login';
 import Navbar from './components/Navbar/Navbar';
 import SignUp from './containers/SignUp/SignUp';
+import OpponentOverview from './containers/OpponentOverview/OpponentOverview';
 import { useAuthContext } from './hooks/useAuthContext';
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
                     <Route
                         path="/dashboard"
                         element={user ? <Dashboard /> : <Login />}
+                    />
+                    <Route
+                        path="/opponent/:opponentId"
+                        element={user ? <OpponentOverview /> : <Login />}
                     />
                 </Routes>
             </BrowserRouter>
