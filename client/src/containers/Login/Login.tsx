@@ -1,7 +1,7 @@
 import AuthBtn from '../../components/AuthBtn/AuthBtn';
 import AuthInput from '../../components/AuthInput/AuthInput';
 import styles from './Login.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import useLogin from '../../hooks/useLogin';
 
@@ -11,6 +11,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState<string>('');
     const [passwordError, setPasswordError] = useState<boolean>(false);
     const { login, isLoading, error } = useLogin();
+    const navigate = useNavigate();
 
     const checkUsername = () => {
         setUsernameError(username === '');
@@ -30,6 +31,7 @@ const Login: React.FC = () => {
             return;
         }
         login(username, password);
+        navigate('/dashboard');
     };
 
     return (
